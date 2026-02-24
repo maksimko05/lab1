@@ -1,5 +1,6 @@
 #ifndef MONEY_H
 #define MONEY_H
+#include <iostream>
 
 struct Money
 {
@@ -7,5 +8,10 @@ struct Money
     short int cop;
 };
 
-void addMoney(Money *money, Money *addMoney), multiplyMoney(Money *money, int count), roundMoney(Money *money), printMoney(Money *money);
+void addMoney(Money *money, Money *addMoney), 
+    multiplyMoney(Money *money, int count), 
+    roundMoney(Money *money), 
+    printMoney(Money *money),
+    calcGeneralPrice(char *path);
+
 #endif

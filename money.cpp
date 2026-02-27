@@ -22,7 +22,8 @@ void multiplyMoney(Money *money, int count){
 }
 
 void roundMoney(Money *money){
-    money->cop = money->cop / 10 * 10;
+    money->cop = money->cop / 10 * 10 + (money->cop % 10 >= 8 ? 10 : 0);
+    fixCops(money);
 }
 
 void printMoney(Money *money){

@@ -12,6 +12,6 @@ void addMoney(Money *money, Money *addMoney),
     multiplyMoney(Money *money, int count), 
     roundMoney(Money *money), 
     printMoney(Money *money),
-    calcGeneralPrice(char *path);
+    calcGeneralPrice(const char *path);
 
 #endif

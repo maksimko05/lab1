@@ -3,27 +3,23 @@
 
 using namespace std;
 
-void fixCops(Money *money){
-    int newGrn = money->cop / 100;
-    money->grn += newGrn;
-    money->cop %= 100;
-}
-
 void addMoney(Money *money, Money *addMoney){
     money->grn += addMoney->grn;
     money->cop += addMoney->cop;
-    fixCops(money);
 }
 
 void multiplyMoney(Money *money, int count){
     money->grn *= count;
     money->cop *= count;
-    fixCops(money);
 }
 
 void roundMoney(Money *money){
     money->cop = money->cop / 10 * 10 + (money->cop % 10 >= 8 ? 10 : 0);
-    fixCops(money);
+    if(money->cop >= 100){
+        int newGrn = money->cop / 100;
+        money->grn += newGrn;
+        money->cop %= 100;
+    }
 }
 
 void printMoney(Money *money){
@@ -43,8 +39,9 @@ void calcGeneralPrice(const char *path){
         char product[256];
         while (fgets(buffer, sizeof(buffer), file)) {
             if (sscanf(buffer, "%s %u %hu %u", product, &grn, &cop, &count) == 4) {
-                if(count < 0 || grn < 0 || cop < 0 || cop >= 100){
+                if(count < 0 || grn < 0 || cop < 0){
                     cout << "incorrect format of input\n";
+                    fclose(file);
                     return;
                 }
                 Money newMoney = {grn, cop};
@@ -53,10 +50,14 @@ void calcGeneralPrice(const char *path){
             }
             else{
                 cout << "incorrect format of input\n";
+                fclose(file);
                 return;
             }
         }
+        cout << "before round: ";
+        printMoney(&money);
         roundMoney(&money);
+        cout << "after round: ";
         printMoney(&money);
         fclose(file);
     }

@@ -15,11 +15,6 @@ void multiplyMoney(Money *money, int count){
 
 void roundMoney(Money *money){
     money->cop = money->cop / 10 * 10 + (money->cop % 10 >= 8 ? 10 : 0);
-    if(money->cop >= 100){
-        int newGrn = money->cop / 100;
-        money->grn += newGrn;
-        money->cop %= 100;
-    }
 }
 
 void printMoney(Money *money){
@@ -54,6 +49,13 @@ void calcGeneralPrice(const char *path){
                 return;
             }
         }
+
+        if(money.cop >= 100){
+            int newGrn = money.cop / 100;
+            money.grn += newGrn;
+            money.cop %= 100;
+        }
+
         cout << "before round: ";
         printMoney(&money);
         roundMoney(&money);

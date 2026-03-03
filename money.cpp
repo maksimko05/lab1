@@ -3,6 +3,12 @@
 
 using namespace std;
 
+void fixCops(Money *money){
+    int newGrn = money->cop / 100;
+    money->grn += newGrn;
+    money->cop %= 100;
+}
+
 void addMoney(Money *money, Money *addMoney){
     money->grn += addMoney->grn;
     money->cop += addMoney->cop;
@@ -16,6 +22,9 @@ void multiplyMoney(Money *money, int count){
 
 void roundMoney(Money *money){
     money->cop = money->cop / 10 * 10 + (money->cop % 10 >= 8 ? 10 : 0);
+    if(money->cop >= 100){
+        fixCops(money);
+    }
 }
 
 void printMoney(Money *money){
@@ -41,9 +50,7 @@ void calcGeneralPrice(const char *path){
                     return;
                 }
                 Money newMoney = {grn, cop};
-                printMoney(&newMoney);
                 multiplyMoney(&newMoney, count);
-                printMoney(&newMoney);
                 addMoney(&money, &newMoney);
             }
             else{
@@ -54,9 +61,7 @@ void calcGeneralPrice(const char *path){
         }
 
         if(money.cop >= 100){
-            int newGrn = money.cop / 100;
-            money.grn += newGrn;
-            money.cop %= 100;
+            fixCops(&money);
         }
 
         cout << "before round: ";

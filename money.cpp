@@ -9,8 +9,9 @@ void addMoney(Money *money, Money *addMoney){
 }
 
 void multiplyMoney(Money *money, int count){
-    money->grn *= count;
-    money->cop *= count;
+    int cops = money->cop * count;
+    money->grn = money->grn * count + cops / 100;
+    money->cop = cops % 100;
 }
 
 void roundMoney(Money *money){
@@ -40,7 +41,9 @@ void calcGeneralPrice(const char *path){
                     return;
                 }
                 Money newMoney = {grn, cop};
+                printMoney(&newMoney);
                 multiplyMoney(&newMoney, count);
+                printMoney(&newMoney);
                 addMoney(&money, &newMoney);
             }
             else{
